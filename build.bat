@@ -4,6 +4,17 @@ setlocal EnableDelayedExpansion
 set PROGFILES=%ProgramFiles%
 if not "%ProgramFiles(x86)%" == "" set PROGFILES=%ProgramFiles(x86)%
 
+REM Check if Visual Studio 2010 is installed
+set MSVCDIR="%PROGFILES%\Microsoft Visual Studio 10.0"
+set VCVARSALLPATH="%PROGFILES%\Microsoft Visual Studio 10.0\VC\vcvarsall.bat"
+if exist %MSVCDIR% (
+  if exist %VCVARSALLPATH% (
+    set COMPILER_VER="2010"
+    echo Using Visual Studio 2010
+	goto setup_env
+  )
+)
+
 REM Check if Visual Studio 2015 is installed
 set MSVCDIR="%PROGFILES%\Microsoft Visual Studio 14.0"
 set VCVARSALLPATH="%PROGFILES%\Microsoft Visual Studio 14.0\VC\vcvarsall.bat"        
@@ -32,17 +43,6 @@ if exist %MSVCDIR% (
   if exist %VCVARSALLPATH% (
     set COMPILER_VER="2012"
     echo Using Visual Studio 2012
-	goto setup_env
-  )
-)
-
-REM Check if Visual Studio 2010 is installed
-set MSVCDIR="%PROGFILES%\Microsoft Visual Studio 10.0"
-set VCVARSALLPATH="%PROGFILES%\Microsoft Visual Studio 10.0\VC\vcvarsall.bat"
-if exist %MSVCDIR% (
-  if exist %VCVARSALLPATH% (
-    set COMPILER_VER="2010"
-    echo Using Visual Studio 2010
 	goto setup_env
   )
 )
